@@ -17,7 +17,7 @@ where
         }
     }
 
-    pub fn from_vec(vec: &Vec<T>) -> Vector<T> {
+    pub fn from_vec(vec: Vec<T>) -> Vector<T> {
         Vector {
             elements: vec.clone(),
         }
