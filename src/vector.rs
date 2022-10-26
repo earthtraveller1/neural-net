@@ -3,6 +3,7 @@ use std::ops::{Add, AddAssign, Mul, Sub};
 /// A programmatic representation of a mathematical vector. Supports basic ope-
 /// rations such as addition, subtraction, and dot product. Does not support o-
 /// perations beyond the requirements of this project (duh)
+#[derive(Debug)]
 pub struct Vector<T> {
     elements: Vec<T>,
 }
@@ -75,3 +76,24 @@ where
         return result;
     }
 }
+
+impl<T> PartialEq for Vector<T>
+where
+    T: PartialEq,
+{
+    fn eq(&self, other: &Self) -> bool {
+        if self.elements.len() != other.elements.len() {
+            return false;
+        }
+
+        for i in 0..self.elements.len() {
+            if self.elements[i] != other.elements[i] {
+                return false;
+            }
+        }
+
+        true
+    }
+}
+
+impl<T> Eq for Vector<T> where T: Eq {}
