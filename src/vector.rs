@@ -47,6 +47,10 @@ impl<T> Sub for Vector<T> where T: Sub<Output = T> + Copy {
     }
 }
 
+// Technically, there isn't really a default multiplication operation for math-
+// ematical vectors, there is a dot product and the cross product. But I doubt 
+// that I'll be using the cross product, the the multiplication operator defau-
+// lts to using dot products, whether you like it or not.
 impl<T> Mul for Vector<T> where T: Mul<Output = T> + Copy + From<i32> + AddAssign {
     type Output = T;
     
