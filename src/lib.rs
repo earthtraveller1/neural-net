@@ -1,6 +1,7 @@
 // Everything that I consider neccessary to be put in another file is placed he-
 // re.
 
+#[derive(Clone)]
 pub struct DataLayer {
     elements: Vec<f32>,
 }
@@ -11,6 +12,7 @@ impl DataLayer {
     }
 }
 
+#[derive(Clone)]
 pub struct WeightLayer {
     elements: Vec<f32>,
     input_count: usize,
