@@ -1,6 +1,8 @@
 // Everything that I consider neccessary to be put in another file is placed he-
 // re.
 
+use std::fs;
+
 #[derive(Clone)]
 pub struct DataLayer {
     elements: Vec<f32>,
@@ -9,6 +11,18 @@ pub struct DataLayer {
 impl DataLayer {
     pub fn new() -> DataLayer {
         DataLayer { elements: Vec::new() }
+    }
+
+    pub fn from_csv_file(file_path: &str) -> Result<DataLayer, std::io::Error> {
+        let mut elements = Vec::new();
+
+        let file_contents = fs::read_to_string(file_path)?;
+        let line = file_contents.split("\n").collect::<Vec<&str>>()[0];
+        line.split(",").for_each(|thing| {
+            elements.push(thing.parse::<f32>().unwrap_or_else(|_| 0.0)); 
+        });
+
+        Ok(DataLayer { elements })
     }
 }
 
