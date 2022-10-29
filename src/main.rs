@@ -9,12 +9,6 @@ impl NeuralNetwork {
         NeuralNetwork { layers: Vec::new() }
     }
 
-    fn from_csv_file(csv_file_path: &str) -> NeuralNetwork {
-        // This is placeholder, at least for now.
-        NeuralNetwork::new()
-    }
-
-
     /// Function that basically just runs the neural network and returns the output. This is rather
     /// simple as well.
     fn run(&self, input_layer: &DataLayer) -> DataLayer {
