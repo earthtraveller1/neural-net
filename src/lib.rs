@@ -84,3 +84,6 @@ impl WeightLayer {
     }
 }
 
+#[test]
+mod tests;
+
