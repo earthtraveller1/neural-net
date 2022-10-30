@@ -26,6 +26,6 @@ fn weight_layer_csv_and_get_methods() {
     
     assert_eq!(test_data.get_value(0, 2), 4.5);
     assert_eq!(test_data.get_value(1, 2), 2.2);
-    assert_eq!(test_data.get_value(2, 2), 9.8);
+    assert_eq!(test_data.get_value(2, 2), 9.9);
     assert_eq!(test_data.get_value(3, 2), 8.8);
 }
