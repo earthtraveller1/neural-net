@@ -84,6 +84,6 @@ impl WeightLayer {
     }
 }
 
-#[test]
+#[cfg(test)]
 mod tests;
 
