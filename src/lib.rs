@@ -2,6 +2,7 @@
 // re.
 
 use std::fs;
+use std::ops::Index;
 
 #[derive(Clone)]
 pub struct DataLayer {
@@ -23,6 +24,14 @@ impl DataLayer {
         });
 
         Ok(DataLayer { elements })
+    }
+}
+
+impl Index<usize> for DataLayer {
+    type Output = f32;
+    
+    fn index(&self, index: usize) -> &Self::Output {
+        &self.elements[index]
     }
 }
 
