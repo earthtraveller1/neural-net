@@ -35,6 +35,9 @@ impl Index<usize> for DataLayer {
     }
 }
 
+// By the way, I chose to use a one dimensional Vec instead of a Vec of Vecs is
+// because it's much faster and cache friendly, especially in a scenario like a
+// neural network.
 #[derive(Clone)]
 pub struct WeightLayer {
     elements: Vec<f32>,
