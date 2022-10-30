@@ -71,7 +71,7 @@ impl WeightLayer {
         let mut input_count = 0;
         let mut output_count = 0;
         
-        let file_contents = fs::read_to_string(file_path)?;
+        let file_contents = String::from_utf8(fs::read_to_string(file_path)?.as_bytes().iter().filter(|c| c.to_owned().to_owned() != 13u8).map(|c| c.to_owned().to_owned()).collect()).unwrap();
         
         file_contents.split("\n").for_each(|line| {
             if input_count == 0 {
