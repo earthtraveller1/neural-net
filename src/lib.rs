@@ -11,7 +11,9 @@ pub struct DataLayer {
 
 impl DataLayer {
     pub fn new() -> DataLayer {
-        DataLayer { elements: Vec::new() }
+        DataLayer {
+            elements: Vec::new(),
+        }
     }
 
     pub fn from_csv_file(file_path: &str) -> Result<DataLayer, std::io::Error> {
@@ -29,7 +31,7 @@ impl DataLayer {
 
 impl Index<usize> for DataLayer {
     type Output = f32;
-    
+
     fn index(&self, index: usize) -> &Self::Output {
         &self.elements[index]
     }
@@ -48,9 +50,9 @@ pub struct WeightLayer {
 impl WeightLayer {
     pub fn new(input_count: usize, output_count: usize) -> WeightLayer {
         WeightLayer {
-            elements: vec![0.0;input_count * output_count],
+            elements: vec![0.0; input_count * output_count],
             input_count,
-            output_count
+            output_count,
         }
     }
 
@@ -61,39 +63,49 @@ impl WeightLayer {
             output_count,
         }
     }
-    
-    // Note that this method is written under the foolish assumption that the  
-    // CSV file that was entered into this function is not irregular. In other 
-    // words, the CSV file must be (for a lack of a better word) "rectangular" 
+
+    // Note that this method is written under the foolish assumption that the
+    // CSV file that was entered into this function is not irregular. In other
+    // words, the CSV file must be (for a lack of a better word) "rectangular"
     // or weird things might happen (most likely a panic or corrupted layouts) XXXDD.
     pub fn from_csv_file(file_path: &str) -> Result<WeightLayer, std::io::Error> {
         let mut elements = Vec::new();
         let mut input_count = 0;
         let mut output_count = 0;
-        
-        let file_contents = String::from_utf8(fs::read_to_string(file_path)?.as_bytes().iter().filter(|c| c.to_owned().to_owned() != 13u8).map(|c| c.to_owned().to_owned()).collect()).unwrap();
-        
+
+        let file_contents = String::from_utf8(
+            fs::read_to_string(file_path)?
+                .as_bytes()
+                .iter()
+                .filter(|c| c.to_owned().to_owned() != 13u8)
+                .map(|c| c.to_owned().to_owned())
+                .collect(),
+        )
+        .unwrap();
+
         file_contents.split("\n").for_each(|line| {
             if input_count == 0 {
                 let mut value_count = 0 as usize;
-                
+
                 line.split(",").for_each(|value| {
                     value_count += 1;
                     elements.push(value.parse::<f32>().unwrap_or_else(|_| 0.0));
                 });
-                
+
                 input_count = value_count;
             } else {
                 line.split(",").for_each(|value| {
                     elements.push(value.parse::<f32>().unwrap_or_else(|_| 0.0));
                 });
             }
-            
+
             output_count += 1;
         });
-        
+
         Ok(WeightLayer {
-            elements, input_count, output_count
+            elements,
+            input_count,
+            output_count,
         })
     }
 
@@ -108,7 +120,8 @@ impl WeightLayer {
                 {
                     let mut j = 0;
                     while j < self.input_count {
-                        output_value += input_data.elements[j] * self.elements[(i * self.input_count) + j];
+                        output_value +=
+                            input_data.elements[j] * self.elements[(i * self.input_count) + j];
                         j += 1;
                     }
                 }
@@ -120,7 +133,7 @@ impl WeightLayer {
 
         DataLayer { elements: output }
     }
-    
+
     pub fn get_value(&self, x: usize, y: usize) -> f32 {
         self.elements[y * self.input_count + x]
     }
@@ -128,4 +141,3 @@ impl WeightLayer {
 
 #[cfg(test)]
 mod tests;
-
