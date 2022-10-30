@@ -117,6 +117,10 @@ impl WeightLayer {
 
         DataLayer { elements: output }
     }
+    
+    pub fn get_value(&self, x: usize, y: usize) -> f32 {
+        self.elements[y * self.input_count + x]
+    }
 }
 
 #[cfg(test)]
