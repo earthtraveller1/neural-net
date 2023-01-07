@@ -1,30 +1,26 @@
-use neural_net::{WeightLayer, DataLayer};
+mod math;
 
-struct NeuralNetwork {
-    layers: Vec<WeightLayer>,
+use math::Matrix;
+use math::Vector;
+
+struct Layer {
+    weights: Matrix,
+    biases: Vector,
 }
 
-impl NeuralNetwork {
-    fn new() -> NeuralNetwork {
-        NeuralNetwork { layers: Vec::new() }
+impl Layer {
+    fn new(input_count: usize, output_count: usize) -> Layer {
+        Layer {
+            weights: Matrix::new(output_count, input_count),
+            biases: Vector::from_random(output_count),
+        }
     }
 
-    /// Function that basically just runs the neural network and returns the output. This is rather
-    /// simple as well.
-    fn run(&self, input_layer: &DataLayer) -> DataLayer {
-        let mut current_data_layer = input_layer.clone();
-        self.layers.iter().for_each(|weight_layer| {
-            current_data_layer = weight_layer.pass_data_through(&current_data_layer);
-        });
-
-        current_data_layer
-    }
-
-    fn add_layer(&mut self, layer: &WeightLayer) {
-        self.layers.push(layer.clone());
+    fn pass_data_through(&self, data: &Vector) -> Vector {
+        self.weights.mul_with_vector(data) + self.biases.clone()
     }
 }
 
 fn main() {
-    println!("Hello, world!");
+    println!("Hello, World!");
 }
