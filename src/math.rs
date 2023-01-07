@@ -4,18 +4,18 @@
 
 use std::ops::{Add, Index};
 
-struct Vector {
+pub struct Vector {
     data: Vec<f64>,
 }
 
 impl Vector {
     /// Creates a new Vector with the specified data.
-    fn from_vec(data: &Vec<f64>) -> Vector {
+    pub fn from_vec(data: &Vec<f64>) -> Vector {
         Vector { data: data.clone() }
     }
 
     /// Creates a new Vector and fills it with random data.
-    fn from_random(len: usize) -> Vector {
+    pub fn from_random(len: usize) -> Vector {
         let mut data = Vec::with_capacity(len);
 
         for _ in 0..len {
@@ -48,7 +48,7 @@ impl Index<usize> for Vector {
     }
 }
 
-struct Matrix {
+pub struct Matrix {
     data: Vec<f64>,
     rows: usize,
     cols: usize,
@@ -56,7 +56,7 @@ struct Matrix {
 
 impl Matrix {
     /// Creates a new Matrix and fills it with random data.
-    fn new(rows: usize, cols: usize) -> Matrix {
+    pub fn new(rows: usize, cols: usize) -> Matrix {
         let mut data = Vec::with_capacity(rows * cols);
         for _ in 0..data.len() {
             data.push(rand::random());
@@ -67,7 +67,7 @@ impl Matrix {
 
     /// Creates a new Matrix from a 2D array. The 2D slice must not have an
     /// irregular shape, or else it will be a runtime error.
-    fn from_2d_slice(slice: &[&[f64]]) -> Matrix {
+    pub fn from_2d_slice(slice: &[&[f64]]) -> Matrix {
         let rows = slice.len();
         let cols = slice[0].len();
 
@@ -80,15 +80,15 @@ impl Matrix {
         Matrix { data, rows, cols }
     }
 
-    fn get(&self, row: usize, col: usize) -> f64 {
+    pub fn get(&self, row: usize, col: usize) -> f64 {
         self.data[col + row * self.rows]
     }
 
-    fn get_mut(&mut self, row: usize, col: usize) -> &mut f64 {
+    pub fn get_mut(&mut self, row: usize, col: usize) -> &mut f64 {
         &mut (self.data[col + row * self.rows])
     }
 
-    fn mul_with_vector(&self, vector: &Vector) -> Vector {
+    pub fn mul_with_vector(&self, vector: &Vector) -> Vector {
         let mut result = Vec::with_capacity(self.rows);
 
         for row in 0..self.rows {
@@ -103,10 +103,10 @@ impl Matrix {
     }
 }
 
-fn logistic(x: f64) -> f64 {
+pub fn logistic(x: f64) -> f64 {
     1.0 / (1.0 + (-x).exp())
 }
 
-fn logistic_derivative(x: f64) -> f64 {
+pub fn logistic_derivative(x: f64) -> f64 {
     logistic(x) * (1.0 - logistic(x))
 }
