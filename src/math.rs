@@ -87,4 +87,18 @@ impl Matrix {
     fn get_mut(&mut self, row: usize, col: usize) -> &mut f64 {
         &mut (self.data[col + row * self.rows])
     }
+
+    fn mul_with_vector(&self, vector: &Vector) -> Vector {
+        let mut result = Vec::with_capacity(self.rows);
+
+        for row in 0..self.rows {
+            let mut sum = 0.0;
+
+            for col in 0..self.cols {
+                sum += self.get(row, col) * vector[col];
+            }
+        }
+
+        Vector { data: result }
+    }
 }
