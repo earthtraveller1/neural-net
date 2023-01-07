@@ -102,3 +102,11 @@ impl Matrix {
         Vector { data: result }
     }
 }
+
+fn logistic(x: f64) -> f64 {
+    1.0 / (1.0 + (-x).exp())
+}
+
+fn logistic_derivative(x: f64) -> f64 {
+    logistic(x) * (1.0 - logistic(x))
+}
