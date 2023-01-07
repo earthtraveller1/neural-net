@@ -4,6 +4,7 @@
 
 use std::ops::{Add, Index};
 
+#[derive(Clone)]
 pub struct Vector {
     data: Vec<f64>,
 }
@@ -48,6 +49,7 @@ impl Index<usize> for Vector {
     }
 }
 
+#[derive(Clone)]
 pub struct Matrix {
     data: Vec<f64>,
     rows: usize,
