@@ -2,7 +2,7 @@
 //! such as linear algebra types like vectors and matrices, plus the sigmoid function
 //! and it's derivative.
 
-use std::ops::{Add, Mul};
+use std::ops::{Add, Index};
 
 struct Vector {
     data: Vec<f64>,
@@ -37,6 +37,14 @@ impl Add for Vector {
         }
 
         Vector { data }
+    }
+}
+
+impl Index<usize> for Vector {
+    type Output = f64;
+
+    fn index(&self, index: usize) -> &Self::Output {
+        &(self.data[index])
     }
 }
 
